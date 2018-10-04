@@ -8,15 +8,43 @@
 
 <header>
     <div>
-        <h1>ブログタイトル</h1>
+        <h2>ログイン画面</h2>
     </div>
 </header>
 
 <body>
     <div>
-        <h2> <?php "タイトル" ?> </h2>
         <div>
-            <pre> <?php "記事" ?> </pre>
+            <form action="" method="post">
+            <fieldset>
+            <legend> 新規登録 </legend>
+                <label for=""> ユーザー名 </label>
+                    <input type="text" value="" name="user_name" placeholder="名前" >
+                    <br>
+                <label for=""> メールアドレス </label>
+                    <input type="text" value="" name="mail" placeholder="メールアドレス">
+                    <br>
+                <label for=""> パスワード </label>
+                    <input type="text" value="" name="pass" placeholder="パスワード">
+                    <br>
+                <input type="submit" value="登録する">
+            </form>
+            </fieldset>
+        </div>
+
+        <div>
+            <form action="" method="post">
+            <fieldset>
+            <legend> ログイン </legend>
+                <label for=""> メールアドレス </label>
+                    <input type="text" value="" name="mail" placeholder="メールアドレス">
+                    <br>
+                <label for=""> パスワード </label> 
+                    <input type="text" value="" name="pass" placeholder="パスワード">
+                    <br>
+                <input type="submit" value="ログイン">
+            </form>
+            </fieldset>
         </div>
     </div>
 </body>

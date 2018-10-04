@@ -48,7 +48,7 @@
 
 <footer>
     <div>
-        <a href="">管理者ログイン</a>
+        <a href="/login.php">管理者ログイン</a>
     </div>
 </footer>
 

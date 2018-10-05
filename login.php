@@ -1,3 +1,12 @@
+<?PHP
+    // 新規登録ユーザー情報のDBへの挿入
+    $user_name = $_POST["user_name"];
+    $mail = $_POST["mail"];
+    $pass = $_POST["pass"];
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -33,7 +42,7 @@
         </div>
 
         <div>
-            <form action="" method="post">
+            <form action="/manage.php" method="post">
             <fieldset>
             <legend> ログイン </legend>
                 <label for=""> メールアドレス </label>

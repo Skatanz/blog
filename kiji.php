@@ -1,3 +1,8 @@
+<?PHP 
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -16,7 +21,7 @@
     <div>
         <h2> <?php "タイトル" ?> </h2>
         <div>
-            <pre> <?php "記事" ?> </pre>
+            <pre> <?php "" ?> </pre>
         </div>
     </div>
 </body>

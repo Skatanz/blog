@@ -1,4 +1,9 @@
-<?PHP 
+<?PHP
+    require 'function.php';    
+
+    $db = dbdata();
+
+
 ?>
 
 
@@ -22,6 +27,7 @@
         <h2> <?php "タイトル" ?> </h2>
         <div>
             <pre> <?php "" ?> </pre>
+            <?php phpinfo(); ?>
         </div>
     </div>
 </body>

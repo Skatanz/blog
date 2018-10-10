@@ -1,10 +1,7 @@
 <?PHP
-    // 新規登録ユーザー情報のDBへの挿入
-    $user_name = $_POST["user_name"];
-    $mail = $_POST["mail"];
-    $pass = $_POST["pass"];
-
-
+    //パスワードのハッシュ化
+    require 'password.php';
+    
 ?>
 
 <!DOCTYPE html>
@@ -24,19 +21,16 @@
 <body>
     <div>
         <div>
-            <form action="" method="post">
+            <form action="/signup.php" method="post">
             <fieldset>
             <legend> 新規登録 </legend>
-                <label for=""> ユーザー名 </label>
-                    <input type="text" value="" name="user_name" placeholder="名前" >
-                    <br>
                 <label for=""> メールアドレス </label>
                     <input type="text" value="" name="mail" placeholder="メールアドレス">
                     <br>
                 <label for=""> パスワード </label>
-                    <input type="text" value="" name="pass" placeholder="パスワード">
+                    <input type="text" value="" name="password" placeholder="パスワード">
                     <br>
-                <input type="submit" value="登録する">
+                <input type="submit" name="signUp" value="登録する">
             </form>
             </fieldset>
         </div>

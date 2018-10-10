@@ -1,10 +1,5 @@
 <?PHP
-    // ログイン情報が間違っていないか確認
-    $mail = $_POST["mail"];
-    //$user = "SELECT FROM user_table WHERE mail = $mail"
-    $user_id= $user->id;
 
-    //$sql = " SELECT FROM kiji_table WHERE user_id = $user_id; "
 
 ?>
 
@@ -26,6 +21,13 @@
 
 <body>
     <div>
+        <div>
+            <a href="/toukou.php">
+                <p>投稿する</p>
+            </a>
+        </div>
+
+
         <div>
             <a href="">
                 <p> <?php echo $sql->title; ?> </p>

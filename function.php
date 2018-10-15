@@ -22,7 +22,7 @@
 
             $stmt = $pdo->prepare("INSERT INTO user_table (mail, password) VALUES (?, ?)");
 
-            $stmt->execute(array($mail, password_hash($password, PASSWORD_DEFAULT)));  // パスワードのハッシュ化を行う（今回は文字列のみなのでbindValue(変数の内容が変わらない)を使用せず、直接excuteに渡しても問題ない）
+            $stmt->execute(array($mail, password_hash($password, PASSWORD_DEFAULT)));  // パスワードのハッシュ化を行う
             $userid = $pdo->lastinsertid();  // 登録した(DB側でauto_incrementした)IDを$useridに入れる
 
             $signUpMessage = '登録が完了しました。あなたの登録IDは '. $userid. ' です。パスワードは '. $password. ' です。';  // ログイン時に使用するIDとパスワード
@@ -38,12 +38,13 @@
     }
 
     //記事のデータベースへの登録処理
-    function toukou($title , $content){
+    function toukou($db , $title , $content){
 
-        $dsn = sprintf('mysql: host=127.0.0.1; dbname=blog; charset=utf8', 'root' , '<fVYVyo+E4do');
+        $dsn = sprintf('mysql: host=%s; dbname=%s; charset=utf8', $db['host'], $db['dbname']);
 
+        // データベースへの登録処理
         try {
-            $pdo = new PDO($dsn, 'root' , '<fVYVyo+E4do' , array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+            $pdo = new PDO($dsn, $db['user'] , $db['pass'] , array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
     
             $stmt = $pdo->prepare("INSERT INTO content_table (title, content) VALUES (?, ?)");
             $stmt->execute(array($title,$content));

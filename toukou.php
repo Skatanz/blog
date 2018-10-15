@@ -1,10 +1,18 @@
 <?PHP
     require 'function.php';
 
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    session_start();
 
-    $Message = toukou($title,$content);
+    if(isset($_POST['toukou'])){
+
+    //データベースの情報入手
+        $db = dbdata();
+
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+
+        $Message = toukou($db , $title , $content);
+    }
 
 ?>
 
@@ -36,7 +44,7 @@
                 <p>内容</p>
                     <textarea rows ="10" value="" name="content"></textarea>
                     <br>
-                <input type="submit" value="投稿する">
+                <input type="submit" name="toukou" value="投稿する">
             </form>
         </div>
     </div>

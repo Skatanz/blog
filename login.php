@@ -1,7 +1,12 @@
 <?PHP
-    //パスワードのハッシュ化
-    require 'password.php';
-    
+    session_start();
+
+    if(isset($_SESSION['mail'])){
+        
+        header("Location:/manage.php");
+        exit();
+
+    }
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +25,23 @@
 
 <body>
     <div>
+
+        <div>
+            <p><?PHP echo $errorMessage ?></p>
+            <form action="/manage.php" method="post">
+            <fieldset>
+            <legend> ログイン </legend>
+                <label for=""> メールアドレス </label>
+                    <input type="text" value="" name="mail" placeholder="メールアドレス">
+                    <br>
+                <label for=""> パスワード </label> 
+                    <input type="text" value="" name="password" placeholder="パスワード">
+                    <br>
+                <input type="submit" name="login" value="ログイン">
+            </form>
+            </fieldset>
+        </div>
+
         <div>
             <form action="/signup.php" method="post">
             <fieldset>
@@ -35,20 +57,6 @@
             </fieldset>
         </div>
 
-        <div>
-            <form action="/manage.php" method="post">
-            <fieldset>
-            <legend> ログイン </legend>
-                <label for=""> メールアドレス </label>
-                    <input type="text" value="" name="mail" placeholder="メールアドレス">
-                    <br>
-                <label for=""> パスワード </label> 
-                    <input type="text" value="" name="pass" placeholder="パスワード">
-                    <br>
-                <input type="submit" value="ログイン">
-            </form>
-            </fieldset>
-        </div>
     </div>
 </body>
 

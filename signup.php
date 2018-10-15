@@ -1,6 +1,4 @@
 <?PHP
-
-    require 'password.php';
     require 'function.php';
     
     //データベースの情報入手

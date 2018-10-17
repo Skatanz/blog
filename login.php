@@ -7,6 +7,9 @@
         exit();
 
     }
+
+    $errorMessage = $_SESSION['error'];
+    
 ?>
 
 <!DOCTYPE html>

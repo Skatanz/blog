@@ -6,7 +6,7 @@
     if(isset($_POST['toukou'])){
 
     //データベースの情報入手
-        $db = dbdata();
+        $db = get_dbdata();
 
         $title = $_POST['title'];
         $content = $_POST['content'];

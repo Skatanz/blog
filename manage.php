@@ -5,6 +5,25 @@
 
     $_SESSION['error'] = "";
 
+    $db = get_dbdata();
+
+    if(isset($_POST['update'])){
+        
+        $idUpdate = $_SESSION['id'];
+        $titleUpdate = $_POST['titleUpdate'];
+        $contentUpdate = $_POST['contentUpdate'];
+        
+        $updateMessage = kiji_update($db, $idUpdate, $titleUpdate, $contentUpdate);
+
+    }
+
+    if(isset($_POST['delete'])){
+        
+        $idDelete = $_SESSION['id'];
+
+        $deleteMessage = kiji_delete($db, $idDelete);
+
+    }
 
     if(empty($_SESSION['mail'])){
     
@@ -23,7 +42,6 @@
                 exit();
             }
 
-                $db = dbdata();
                 $mail = $_POST['mail'];
                 $password = $_POST['password'];
 
@@ -34,11 +52,14 @@
                     //データベースへ接続
                     $pdo = new PDO($dsn, $db['user'] , $db['pass'] , array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
                     //sql処理の準備
-                    $sql = "SELECT * FROM user_table where mail = $mail";
+                    $sql = "SELECT * FROM user_table where mail =:mail ";
                     //sqlクエリの実行
-                    $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":mail", $mail);
+                    $stmt->execute();
+                    $pass = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    if (password_verify($password, $stmt['password'])){
+                    if (password_verify($password, $pass[0]['password'])){
                     
                         session_regenerate_id(true);
                         $_SESSION['mail'] = $mail;
@@ -52,7 +73,7 @@
     
                 } catch (PDOException $e) {
                     $errorMessage = 'データベースエラー';
-                    //$errorMessage = $e->getMessage(); // でエラー内容を参照可能（デバッグ時のみ表示）
+                    $errorMessage = $e->getMessage(); // でエラー内容を参照可能（デバッグ時のみ表示）
                 }
 
         } else {
@@ -61,8 +82,9 @@
         }
     }
 
-?>
+    $contents = get_contents($db);
 
+?>
 
 
 <!DOCTYPE html>
@@ -81,47 +103,33 @@
 
 <body>
     <div>
+
         <div>
-            <a href="/toukou.php">
-                <p>投稿する</p>
-            </a>
+            <p><?PHP echo $updateMessage; ?></p>
+            <p><?PHP echo $deleteMessage; ?></p>
         </div>
 
+    <div>
+        <?PHP foreach($contents as $row): ?>
+            <div>
+                <a href="/kiji.php?id=<?PHP echo $row['id']; ?>">
+                    <?PHP echo $row['title']; ?>
+                </a>
+            </div>
+        <?PHP endforeach; ?>
 
-        <div>
-            <a href="">
-                <p> <?php echo $sql->title; ?> </p>
-            </a>
-            <a href="">編集する</a>
-        </div>
-
-        <div>
-            <a href="">
-                <p> <?php "2記事目タイトル" ?> </p>
-            </a>
-        </div>
-
-        <div>
-            <a href="">
-                <p> <?php "3記事目タイトル" ?> </p>
-            </a>
-        </div>
-
-        <div>
-            <a href="">
-                <p> <?php "4記事目タイトル" ?> </p>
-            </a>
-        </div>
-
-        <div>
-            <a href="">
-                <p> <?php "5記事目タイトル" ?> </p>
-            </a>
-        </div>    
+        <p><?PHP echo $errorMessage?></p>
+    </div>
     </div>
 </body>
 
 <footer>
+    <div>
+        <a href="/toukou.php">
+            <p>投稿する</p>
+        </a>
+    </div>
+
     <div>
         <a href="/index.php">ログアウト</a>
     </div>

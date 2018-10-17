@@ -2,7 +2,7 @@
     require 'function.php';
     
     //データベースの情報入手
-    $db = dbdata();
+    $db = get_dbdata();
 
     if (isset($_POST['signUp'])) {
 

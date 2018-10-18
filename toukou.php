@@ -52,6 +52,7 @@
 
 <footer>
     <div>
+        <a href="<?PHP echo $_SERVER['HTTP_REFERER']; ?> ">戻る</a>
         <a href="/index.php">ログアウト</a>
     </div>
 </footer>

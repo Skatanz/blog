@@ -11,7 +11,7 @@
     if(isset($_SESSION['mail'])){
         $edit = "編集する";
     }
-    
+
 ?>
 
 
@@ -32,13 +32,16 @@
 
 <body>
     <div>
-        <p> <?PHP echo $content[0]['content']; ?> </p>
         <p> <?PHP echo $content[0]['created_at']; ?></p>
+    </div>
+    <div>
+        <p> <?PHP echo $content[0]['content']; ?> </p>
     </div>
 </body>
 
 <footer>
     <a href="/edit.php?id=<?PHP echo $_get_id;?>"><?PHP echo $edit;?></a>
+    <a href="<?PHP echo $_SERVER['HTTP_REFERER']; ?> ">戻る</a>
     <a href="/index.php">トップページ</a>
 </footer>
 

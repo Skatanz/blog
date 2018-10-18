@@ -45,36 +45,7 @@
                 $mail = $_POST['mail'];
                 $password = $_POST['password'];
 
-                $dsn = sprintf('mysql: host=%s; dbname=%s; charset=utf8', $db['host'], $db['dbname']);
-
-               // ユーザ認証
-                try {
-                    //データベースへ接続
-                    $pdo = new PDO($dsn, $db['user'] , $db['pass'] , array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
-                    //sql処理の準備
-                    $sql = "SELECT * FROM user_table where mail =:mail ";
-                    //sqlクエリの実行
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->bindValue(":mail", $mail);
-                    $stmt->execute();
-                    $pass = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    if (password_verify($password, $pass[0]['password'])){
-                    
-                        session_regenerate_id(true);
-                        $_SESSION['mail'] = $mail;
-
-                    } else {
-
-                        $_SESSION['error'] = "パスワードが違います";
-                        header("Location:/login.php");
-                        exit();
-                    }
-    
-                } catch (PDOException $e) {
-                    $errorMessage = 'データベースエラー';
-                    $errorMessage = $e->getMessage(); // でエラー内容を参照可能（デバッグ時のみ表示）
-                }
+                $errorMessage = login($db, $mail, $password);
 
         } else {
             header("Location: /login.php");
@@ -82,7 +53,18 @@
         }
     }
 
-    $contents = get_contents($db);
+    if(isset($_GET["page"])){
+
+        $getPage = $_GET["page"];
+
+    } else {
+
+        $getPage = 1;
+        
+    }
+
+    $contents = get_contents($db, $getPage);
+    $pages = get_total_page($db);
 
 ?>
 
@@ -109,21 +91,27 @@
             <p><?PHP echo $deleteMessage; ?></p>
         </div>
 
-    <div>
-        <?PHP foreach($contents as $row): ?>
-            <div>
-                <a href="/kiji.php?id=<?PHP echo $row['id']; ?>">
-                    <?PHP echo $row['title']; ?>
-                </a>
-            </div>
-        <?PHP endforeach; ?>
-
-        <p><?PHP echo $errorMessage?></p>
-    </div>
+        <div>
+            <?PHP foreach($contents as $row): ?>
+                <div>
+                    <a href="/kiji.php?id=<?PHP echo $row['id']; ?>">
+                        <?PHP echo $row['title']; ?>
+                    </a>
+                </div>
+            <?PHP endforeach; ?>
+        </div>
     </div>
 </body>
 
 <footer>
+    <div>
+        <?php
+            for($i=1; $i < $pages; $i++) {
+                printf("<a href='?page=%d'>%dページへ</a><br />\n", $i, $i);
+            }
+        ?>
+    </div>
+
     <div>
         <a href="/toukou.php">
             <p>投稿する</p>

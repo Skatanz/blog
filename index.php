@@ -9,53 +9,19 @@
     session_destroy();
 
     $db = get_dbdata();
-    $dsn = sprintf('mysql: host=%s; dbname=%s; charset=utf8', $db['host'], $db['dbname']);
     
     if(isset($_GET["page"])){
 
-        $_get_page = $_GET["page"];
-        $_get_query = $_GET["q"];
+        $getPage = $_GET["page"];
 
     } else {
 
-        $_get_page = 0;
-        $_get_query = 0;
+        $getPage = 1;
         
     }
 
-    $contents = get_contents($db);
-
-    $csql = "SELECT COUNT(*) FROM content_table WHERE id =:q "; // 総件数カウント用SQL
-    $ssql = "SELECT * FROM content_table WHERE id =:q  ORDER BY 'id' LIMIT :start, 10"; // データ抽出用SQL
-    
-
-    try{
-
-        $pdo = new PDO($dsn, $db['user'] , $db['pass'] , array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
-
-        // データ抽出用SQLを、プリペアドステートメントで実行
-        $ssth = $pdo->prepare($ssql);
-        $ssth->bindValue(":q", $_get_query, PDO::PARAM_INT);
-        $ssth->bindValue(":start", $_get_page * 10, PDO::PARAM_INT);
-        $ssth->execute();
-        $data = $ssth->fetchAll(PDO::FETCH_ASSOC);
-
-        // 総件数カウント用SQLを、プリペアドステートメントで実行
-        $csth = $pdo->prepare($csql);
-        $csth->bindValue(":q", $_get_query, PDO::PARAM_INT);
-        $csth->execute();
-        $total = $csth->fetchColumn(PDO::FETCH_ASSOC);
-
-        $pages = ceil($total / 10); // 総件数÷1ページに表示する件数 を切り上げたものが総ページ数
-    
-    } catch (PDOException $e) {
-        
-        $errorMessage = 'データベースエラー';
-        $errorMessage = $e->getMessage(); // でエラー内容を参照可能（デバッグ時のみ表示）
-
-    }
-
-    
+    $contents = get_contents($db, $getPage);
+    $pages = get_total_page($db);
 
 ?>
 
@@ -82,12 +48,18 @@
                 </a>
             </div>
         <?PHP endforeach; ?>
-
-        <p><?PHP echo $errorMessage?></p>
     </div>
 </body>
 
 <footer>
+    <div>
+        <?php
+            for($i=1; $i < $pages; $i++) {
+                printf("<a href='?page=%d'>%dページへ</a><br />\n", $i, $i);
+            }
+        ?>
+    </div>
+
     <div>
         <a href="/login.php">管理者ログイン</a>
     </div>

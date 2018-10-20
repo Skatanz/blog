@@ -1,70 +1,73 @@
 <?PHP
-    require 'function.php';
-    
-    session_start();
 
-    $_SESSION['error'] = "";
+require 'function.php';
 
-    $db = get_dbdata();
+session_start ();
 
-    if(isset($_POST['update'])){
-        
-        $idUpdate = $_SESSION['id'];
-        $titleUpdate = $_POST['titleUpdate'];
-        $contentUpdate = $_POST['contentUpdate'];
-        
-        $updateMessage = art_update($db, $idUpdate, $titleUpdate, $contentUpdate);
+$_SESSION[ 'error' ] = "";
 
-    }
+$db = set_dbData ();
 
-    if(isset($_POST['delete'])){
-        
-        $idDelete = $_SESSION['id'];
+$auth = new Auth($db);
+$article = new Article($db);
 
-        $deleteMessage = art_delete($db, $idDelete);
+if ( isset( $_POST[ 'update' ] ) ) {
 
-    }
+    $idUpdate = $_SESSION[ 'id' ];
+    $titleUpdate = $_POST[ 'titleUpdate' ];
+    $contentUpdate = $_POST[ 'contentUpdate' ];
 
-    if(empty($_SESSION['mail'])){
-    
-        if(isset($_POST['login'])){
+    $updateMessage = $article->update ( $idUpdate, $titleUpdate, $contentUpdate );
 
-            if(empty($_POST['mail'])){
-                        
-                $_SESSION['error'] = "メールアドレスが入力されていません";
-                header("Location:/login.php");
-                exit();
+}
 
-            } elseif(empty($_POST['password'])) {
-            
-                $_SESSION['error'] = "パスワードが入力されていません";
-                header("Location:/login.php");
-                exit();
-            }
+if ( isset( $_POST[ 'delete' ] ) ) {
 
-                $mail = $_POST['mail'];
-                $password = $_POST['password'];
+    $idDelete = $_SESSION[ 'id' ];
+    $deleteMessage = $article->delete ( $idDelete );
 
-                $errorMessage = login($db, $mail, $password);
+}
 
-        } else {
-            header("Location: /login.php");
-            exit();    
+if ( empty( $_SESSION[ 'mail' ] ) ) {
+
+    if ( isset( $_POST[ 'login' ] ) ) {
+
+        if ( empty( $_POST[ 'mail' ] ) ) {
+
+            $_SESSION[ 'error' ] = "メールアドレスが入力されていません";
+            header ( "Location:/login.php" );
+            exit();
+
+        } elseif ( empty( $_POST[ 'password' ] ) ) {
+
+            $_SESSION[ 'error' ] = "パスワードが入力されていません";
+            header ( "Location:/login.php" );
+            exit();
         }
-    }
 
-    if(isset($_GET["page"])){
+        $mail = $_POST[ 'mail' ];
+        $password = $_POST[ 'password' ];
 
-        $getPage = $_GET["page"];
+        $errorMessage = $auth->login ( $mail, $password );
 
     } else {
-
-        $getPage = 1;
-        
+        header ( "Location: /login.php" );
+        exit();
     }
+}
 
-    $contents = get_contents($db, $getPage);
-    $pages = get_total_page($db);
+if ( isset( $_GET[ "page" ] ) ) {
+
+    $getPage = $_GET[ "page" ];
+
+} else {
+
+    $getPage = 1;
+
+}
+
+$contents = $article->get_contents ( $getPage );
+$pages = $article->get_total_page ( );
 
 ?>
 

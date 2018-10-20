@@ -4,17 +4,17 @@ require 'function.php';
 
 session_start ();
 
-//ログアウト処理
-$_SESSION = array ();
-// 最終的に、セッションを破壊する
-session_destroy ();
+$db = set_dbData ();
 
-$db = get_dbdata ();
+$auth = new Auth( $db );
+$article = new Article( $db );
+
+$auth->logout();
 
 $getPage = isset( $_GET[ "page" ] ) ? $_GET[ "page" ] : 1;
 
-$contents = get_contents ( $db , $getPage );
-$pages = get_total_page ( $db );
+$contents = $article->get_contents ( $getPage );
+$pages = $article->get_total_page ( );
 
 ?>
 

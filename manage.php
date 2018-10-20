@@ -13,7 +13,7 @@
         $titleUpdate = $_POST['titleUpdate'];
         $contentUpdate = $_POST['contentUpdate'];
         
-        $updateMessage = kiji_update($db, $idUpdate, $titleUpdate, $contentUpdate);
+        $updateMessage = art_update($db, $idUpdate, $titleUpdate, $contentUpdate);
 
     }
 
@@ -21,7 +21,7 @@
         
         $idDelete = $_SESSION['id'];
 
-        $deleteMessage = kiji_delete($db, $idDelete);
+        $deleteMessage = art_delete($db, $idDelete);
 
     }
 
@@ -94,7 +94,7 @@
         <div>
             <?PHP foreach($contents as $row): ?>
                 <div>
-                    <a href="/kiji.php?id=<?PHP echo $row['id']; ?>">
+                    <a href="/article.php?id=<?PHP echo $row['id']; ?>">
                         <?PHP echo $row['title']; ?>
                     </a>
                 </div>
@@ -113,7 +113,7 @@
     </div>
 
     <div>
-        <a href="/toukou.php">
+        <a href="/contribute.php">
             <p>投稿する</p>
         </a>
     </div>

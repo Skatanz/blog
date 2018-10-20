@@ -1,19 +1,19 @@
 <?PHP
-    require 'function.php';    
-    session_start();
 
-    $db = get_dbdata();
-    
-    $_get_id = $_GET['id'];
+require 'function.php';
+session_start ();
 
-    $content = get_content($db , $_get_id);
+$db = get_dbdata ();
 
-    if(isset($_SESSION['mail'])){
-        $edit = "編集する";
-    }
+$_get_id = $_GET[ 'id' ];
+
+$content = get_content ( $db, $_get_id );
+
+if ( isset( $_SESSION[ 'mail' ] ) ) {
+    $edit = "編集する";
+}
 
 ?>
-
 
 
 <!DOCTYPE html>

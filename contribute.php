@@ -1,18 +1,19 @@
 <?PHP
-    require 'function.php';
 
-    session_start();
+require 'function.php';
 
-    if(isset($_POST['toukou'])){
+session_start ();
+
+if ( isset( $_POST[ 'contribute' ] ) ) {
 
     //データベースの情報入手
-        $db = get_dbdata();
+    $db = get_dbdata ();
 
-        $title = $_POST['title'];
-        $content = $_POST['content'];
+    $title = $_POST[ 'title' ];
+    $content = $_POST[ 'content' ];
 
-        $Message = toukou($db , $title , $content);
-    }
+    $Message = contribute ( $db, $title, $content );
+}
 
 ?>
 
@@ -44,7 +45,7 @@
                 <p>内容</p>
                     <textarea rows ="10" value="" name="content"></textarea>
                     <br>
-                <input type="submit" name="toukou" value="投稿する">
+                <input type="submit" name="contribute" value="投稿する">
             </form>
         </div>
     </div>
@@ -52,7 +53,7 @@
 
 <footer>
     <div>
-        <a href="<?PHP echo $_SERVER['HTTP_REFERER']; ?> ">戻る</a>
+        <a href="/manage.php">管理画面へ戻る</a>
         <a href="/index.php">ログアウト</a>
     </div>
 </footer>

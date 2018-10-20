@@ -1,17 +1,18 @@
 <?PHP
-    require 'function.php';
-    
-    //データベースの情報入手
-    $db = get_dbdata();
 
-    if (isset($_POST['signUp'])) {
+require 'function.php';
 
-        $mail = $_POST['mail'];
-        $password = $_POST['password'];
+//データベースの情報入手
+$db = get_dbdata ();
 
-        $signUpMessage = signUp($db , $mail , $password);
-    }
- 
+if ( isset( $_POST[ 'signUp' ] ) ) {
+
+    $mail = $_POST[ 'mail' ];
+    $password = $_POST[ 'password' ];
+
+    $signUpMessage = signUp ( $db, $mail, $password );
+}
+
 
 ?>
 

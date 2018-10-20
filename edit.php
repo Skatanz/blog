@@ -1,18 +1,17 @@
 <?PHP
-    require 'function.php';    
-    session_start();
+require 'function.php';
+session_start ();
 
-    $_SESSION['id'] = "";
+$_SESSION[ 'id' ] = "";
 
-    $db = get_dbdata();
-    
-    $_get_id = $_GET['id'];
+$db = get_dbdata ();
 
-    $content = get_content($db , $_get_id);
+$_get_id = $_GET[ 'id' ];
 
-    $_SESSION['id'] = $_get_id; 
+$content = get_content ( $db, $_get_id );
+
+$_SESSION[ 'id' ] = $_get_id;
 ?>
-
 
 
 <!DOCTYPE html>

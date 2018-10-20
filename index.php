@@ -1,27 +1,20 @@
 <?PHP
-    require 'function.php';
 
-    session_start();
+require 'function.php';
 
-    $_SESSION = array();
+session_start ();
 
-    // 最終的に、セッションを破壊する
-    session_destroy();
+//ログアウト処理
+$_SESSION = array ();
+// 最終的に、セッションを破壊する
+session_destroy ();
 
-    $db = get_dbdata();
-    
-    if(isset($_GET["page"])){
+$db = get_dbdata ();
 
-        $getPage = $_GET["page"];
+$getPage = isset( $_GET[ "page" ] ) ? $_GET[ "page" ] : 1;
 
-    } else {
-
-        $getPage = 1;
-        
-    }
-
-    $contents = get_contents($db, $getPage);
-    $pages = get_total_page($db);
+$contents = get_contents ( $db , $getPage );
+$pages = get_total_page ( $db );
 
 ?>
 
@@ -43,7 +36,7 @@
     <div>
         <?PHP foreach($contents as $row): ?>
             <div>
-                <a href="/kiji.php?id=<?PHP echo $row['id']; ?>">
+                <a href="/article.php?id=<?PHP echo $row['id']; ?>">
                     <?PHP echo $row['title']; ?>
                 </a>
             </div>

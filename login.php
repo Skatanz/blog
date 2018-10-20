@@ -1,15 +1,16 @@
 <?PHP
-    session_start();
 
-    if(isset($_SESSION['mail'])){
-        
-        header("Location:/manage.php");
-        exit();
+session_start ();
 
-    }
+if ( isset( $_SESSION[ 'mail' ] ) ) {
 
-    $errorMessage = $_SESSION['error'];
-    
+    header ( "Location:/manage.php" );
+    exit();
+
+}
+
+$errorMessage = $_SESSION[ 'error' ];
+
 ?>
 
 <!DOCTYPE html>

@@ -3,14 +3,16 @@
 require 'function.php';
 
 //データベースの情報入手
-$db = get_dbdata ();
+$db = set_dbData ();
+$article = new Article( $db );
+
 
 if ( isset( $_POST[ 'signUp' ] ) ) {
 
     $mail = $_POST[ 'mail' ];
     $password = $_POST[ 'password' ];
 
-    $signUpMessage = signUp ( $db, $mail, $password );
+    $signUpMessage = $article->signUp ( $mail, $password );
 }
 
 

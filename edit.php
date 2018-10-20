@@ -4,11 +4,15 @@ session_start ();
 
 $_SESSION[ 'id' ] = "";
 
-$db = get_dbdata ();
+$db = set_dbData ();
+
+/** @var TYPE_NAME $article */
+$article = new Article( $db );
 
 $_get_id = $_GET[ 'id' ];
 
-$content = get_content ( $db, $_get_id );
+/** @var TYPE_NAME $content */
+$content = $article->get_content ( $_get_id );
 
 $_SESSION[ 'id' ] = $_get_id;
 ?>

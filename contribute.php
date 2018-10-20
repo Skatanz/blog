@@ -4,15 +4,15 @@ require 'function.php';
 
 session_start ();
 
-if ( isset( $_POST[ 'contribute' ] ) ) {
+$db = set_dbData ();
+$article = new Article( $db );
 
-    //データベースの情報入手
-    $db = get_dbdata ();
+if ( isset( $_POST[ 'contribute' ] ) ) {
 
     $title = $_POST[ 'title' ];
     $content = $_POST[ 'content' ];
 
-    $Message = contribute ( $db, $title, $content );
+    $message = $article->contribute ( $title, $content );
 }
 
 ?>
@@ -34,7 +34,7 @@ if ( isset( $_POST[ 'contribute' ] ) ) {
 <body>
     <div>
         <div>
-            <p><?PHP echo $Message ?></p>
+            <p><?PHP echo $message ?></p>
         </div>
 
         <div>

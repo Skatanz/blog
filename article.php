@@ -3,11 +3,12 @@
 require 'function.php';
 session_start ();
 
-$db = get_dbdata ();
+$db = set_dbData ();
+$article = new Article( $db );
 
 $_get_id = $_GET[ 'id' ];
 
-$content = get_content ( $db, $_get_id );
+$content = $article->get_content ( $_get_id );
 
 if ( isset( $_SESSION[ 'mail' ] ) ) {
     $edit = "編集する";

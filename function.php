@@ -38,7 +38,6 @@ Class Auth
 
     /**
      * 新規登録画面でのデータベースへの登録処理
-     * @param $db
      * @param $mail
      * @param $password
      * @return string
@@ -69,7 +68,6 @@ Class Auth
 
     /**
      * ログイン処理
-     * @param $db
      * @param $mail
      * @param $password
      */
@@ -80,7 +78,6 @@ Class Auth
 
         try {
 
-            //sqlクエリの実行
             $stmt = $this->pdo->prepare ( $sql );
             $stmt->bindValue ( ":mail", $mail );
             $stmt->execute ();

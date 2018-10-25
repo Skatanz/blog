@@ -1,6 +1,7 @@
 <?PHP
 
 require 'function.php';
+require 'Class/Article.php';
 
 //データベースの情報入手
 $db = set_dbData ();

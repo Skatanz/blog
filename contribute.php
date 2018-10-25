@@ -1,6 +1,7 @@
 <?PHP
 
 require 'function.php';
+require 'Class/Article.php';
 
 session_start ();
 
@@ -9,47 +10,64 @@ $article = new Article( $db );
 
 if ( isset( $_POST[ 'contribute' ] ) ) {
 
-    $title = $_POST[ 'title' ];
-    $content = $_POST[ 'content' ];
+    if ($_POST['csrf'] === $_SESSION['csrfToken']) {
 
-    $message = $article->contribute ( $title, $content );
+        $title = $_POST[ 'title' ];
+        $content = $_POST[ 'content' ];
+        $message = $article->contribute ( $title, $content );
+    }
+
+} else {
+
+    $_SESSION['csrfToken'] = "";
+
+    $TOKEN_LENGTH = 16;
+    $tokenByte = openssl_random_pseudo_bytes($TOKEN_LENGTH);
+    $csrfToken = bin2hex($tokenByte);
+
+    //セッションに設定
+    $_SESSION['csrfToken'] = $csrfToken;
+
 }
+
+
 
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 
-<!-- CSS Bootstrap　-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-<!-- JS Bootstrap -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-<!-- JS tinymce -->
-<script src="js/tinymce/tinymce.min.js"></script>
-<script>
-    tinymce.init({
-        selector: "#editor", // id="foo"の場所にTinyMCEを適用
-        language: "ja",   // 言語 = 日本語
-        height: 300,      // 高さ = 300px
-        menubar: false,   // メニューバーを隠す
-        plugins: "textcolor image link", // 文字色、画像ボタン、リンク用のプラグインを適用
-        toolbar: [ // ツールバー(2段)
-            // 戻る 進む | フォーマット | 太字 斜体 | 左寄せ 中央寄せ 右寄せ 均等割付 | 箇条書き 段落番号 インデントを減らす インデント
-            "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
-            // 文字サイズ 文字色 画像 リンク
-            "fontsizeselect forecolor image link"
-        ],
-        statusbar: false, // ステータスバーを隠す
-    });
-</script>
-
 <head>
     <meta charset="UTF-8">
     <title>ブログタイトル</title>
+
+    <!-- CSS Bootstrap　-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- JS Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <!-- JS tinymce -->
+    <script src="js/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: "#editor", // id="editor"の場所にTinyMCEを適用
+            language: "ja",   // 言語 = 日本語
+            height: 300,      // 高さ = 300px
+            menubar: false,   // メニューバーを隠す
+            plugins: "textcolor image link", // 文字色、画像ボタン、リンク用のプラグインを適用
+            toolbar: [ // ツールバー(2段)
+                // 戻る 進む | フォーマット | 太字 斜体 | 左寄せ 中央寄せ 右寄せ 均等割付 | 箇条書き 段落番号 インデントを減らす インデント
+                "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+                // 文字サイズ 文字色 画像 リンク
+                "fontsizeselect forecolor image link"
+            ],
+            statusbar: false, // ステータスバーを隠す
+        });
+    </script>
+
 </head>
 
 <header>
@@ -66,6 +84,7 @@ if ( isset( $_POST[ 'contribute' ] ) ) {
 
         <div>
             <form action="" method ="post">
+                <input type="hidden" name="csrf" value='{$csrfToken}' >
                 <p>タイトル</p>
                     <input type="text" value="" name="title">
                     <br>

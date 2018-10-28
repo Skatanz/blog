@@ -20,9 +20,8 @@ Class Article
     public function __construct ( $db )
     {
         $this->db = $db;
-        $host = 'host='.$this->$db['host'];
-        $dbname = 'dbname='.$this->$db['dbname'];
-        $this->pdo = new PDO( "mysql:{$host} ; $dbname", $this->db[ 'user' ], $this->db[ 'pass' ],
+        $this->dsn = sprintf ( 'mysql:host=%s; dbname=%s; charset=utf8', $db[ 'host' ], $db[ 'dbname' ] );
+        $this->pdo = new PDO( $this->dsn, $this->db[ 'user' ], $this->db[ 'pass' ],
                               array ( PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ) );
     }
 

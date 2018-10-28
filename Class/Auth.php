@@ -15,8 +15,9 @@ Class Auth
     public function __construct ( $db )
     {
         $this->db = $db;
-        $this->dsn = sprintf ( 'mysql: host=%s; dbname=%s ', $db[ 'host' ], $db[ 'dbname' ] );
-        $this->pdo = new PDO( $this->dsn, $this->db[ 'user' ], $this->db[ 'pass' ],
+        $host = 'host='.$this->$db['host'];
+        $dbname = 'dbname='.$this->$db['dbname'];
+        $this->pdo = new PDO( "mysql:{$host} ; $dbname", $this->db[ 'user' ], $this->db[ 'pass' ],
                               array ( PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ) );
     }
 

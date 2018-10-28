@@ -7,15 +7,17 @@ session_start ();
  * @return mixed
  */
 function set_dbData ()
+
 {
 
-    $db[ 'host' ] = "127.0.0.1";
-    $db[ 'dbname' ] = "blog";
-    $db[ 'user' ] = "root";
-    $db[ 'pass' ] = "<fVYVyo+E4do";
+    $db[ 'host' ] = getenv('DB_HOST');
+    $db[ 'dbname' ] = getenv('DB_DATABASE');
+    $db[ 'user' ] = getenv('DB_USERNAME');
+    $db[ 'pass' ] = getenv('DB_PASSWORD');
 
     return $db;
 }
+
 
 
 

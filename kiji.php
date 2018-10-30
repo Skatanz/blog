@@ -1,11 +1,11 @@
 <?PHP
 
-require 'function.php';
+require 'Class/DB_CONNECT.php';
 require 'Class/Article.php';
 
 session_start ();
 
-$db = set_dbData ();
+$db = new DB_CONNECT();
 $article = new Article( $db );
 
 $_get_id = $_GET[ 'id' ];

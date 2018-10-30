@@ -1,28 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: user
- * Date: 2018/10/22
- * Time: 22:07
- */
 
 Class Article
 {
+    public $pdo;
 
-    private $db;
-    private $dsn;
-    private $pdo;
-
-    /**
-     * auth constructor.
-     * @param $db
-     */
-    public function __construct ( $db )
-    {
-        $this->db = $db;
-        $this->dsn = sprintf ( 'mysql:host=%s; dbname=%s; charset=utf8', $db[ 'host' ], $db[ 'dbname' ] );
-        $this->pdo = new PDO( $this->dsn, $this->db[ 'user' ], $this->db[ 'pass' ],
-                              array ( PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ) );
+    public function __construct($db)
+    {   
+        $this->pdo = $db->pdo;
     }
 
     /**
@@ -33,14 +17,14 @@ Class Article
      * @return string
      */
 
-    function contribute ( $title, $content )
+    function contribute($title, $content)
     {
 
         // データベースへの登録処理
         try {
 
-            $stmt = $this->pdo->prepare ( "INSERT INTO content_table (title, content) VALUES (?, ?)" );
-            $stmt->execute ( array ( $title, $content ) );
+            $stmt = $this->pdo->prepare( "INSERT INTO content_table (title, content) VALUES (?, ?)" );
+            $stmt->execute( [$title , $content] );
 
             $artUpMessage = '投稿が完了しました。';
 
@@ -59,17 +43,17 @@ Class Article
      * @param $getPage
      * @return array|string
      */
-    function get_contents ( $getPage )
+    function get_contents($getPage)
     {
         $sql = "SELECT * FROM content_table ORDER BY created_at DESC LIMIT :start,5 ";
 
         // データベースからコンテンツを全件取得
         try {
 
-            $stmt = $this->pdo->prepare ( $sql );
-            $stmt->bindValue ( ":start", ( $getPage - 1 ) * 5, PDO::PARAM_INT );
-            $stmt->execute ();
-            $contents = $stmt->fetchAll ( PDO::FETCH_ASSOC );
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue( ":start", ( $getPage - 1 ) * 5, PDO::PARAM_INT );
+            $stmt->execute();
+            $contents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $contents;
 
@@ -92,9 +76,9 @@ Class Article
         try {
 
             // 総件数カウント用SQLを、プリペアドステートメントで実行
-            $stmt = $this->pdo->query ( $sql );
-            $total = $stmt->fetchColumn ();
-            $pages = ceil ( $total / 5 ); // 総件数÷1ページに表示する件数 を切り上げたものが総ページ数
+            $stmt = $this->pdo->query($sql);
+            $total = $stmt->fetchColumn();
+            $pages = ceil( $total / 5 ); // 総件数÷1ページに表示する件数 を切り上げたものが総ページ数
 
             return $pages;
 
@@ -112,16 +96,16 @@ Class Article
      * @param $_get_id
      * @return array|string
      */
-    function get_content ( $_get_id )
+    function get_content($_get_id)
     {
         $sql = "SELECT * FROM content_table WHERE id =:id ";
 
         //データベースからidに対応したコンテンツを取得
         try {
 
-            $stmt = $this->pdo->prepare ( $sql );
-            $stmt->bindValue ( ":id", $_get_id, PDO::PARAM_INT );
-            $stmt->execute ();
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue( ":id", $_get_id, PDO::PARAM_INT );
+            $stmt->execute();
             $content = $stmt->fetchAll ( PDO::FETCH_ASSOC );
 
             return $content;
@@ -143,13 +127,13 @@ Class Article
      * @return string
      */
 
-    function update ( $idUpdate, $titleUpdate, $contentUpdate )
+    function update($idUpdate, $titleUpdate, $contentUpdate)
     {
         $sql = "UPDATE content_table SET title =:title , content =:content  WHERE id =:id ";
 
         try {
 
-            $stmt = $this->pdo->prepare ( $sql );
+            $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue ( ":title", $titleUpdate );
             $stmt->bindValue ( ":content", $contentUpdate );
             $stmt->bindValue ( ":id", $idUpdate, PDO::PARAM_INT );
@@ -173,15 +157,15 @@ Class Article
      * @param $idDelete
      * @return string
      */
-    function delete ( $idDelete )
+    function delete($idDelete)
     {
         $sql = " DELETE FROM content_table WHERE id =:id ";
 
         try {
 
-            $stmt = $this->pdo->prepare ( $sql );
-            $stmt->bindValue ( ":id", $idDelete, PDO::PARAM_INT );
-            $stmt->execute ();
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue( ":id", $idDelete, PDO::PARAM_INT );
+            $stmt->execute();
 
             $message = "削除しました";
 

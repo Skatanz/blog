@@ -1,36 +1,20 @@
 <?PHP
 
-require 'function.php';
+require 'Class/DB_CONNECT.php';
 require 'Class/Article.php';
 
 session_start ();
 
-$db = set_dbData ();
-$article = new Article( $db );
+$db = new DB_CONNECT();
+$article = new Article($db);
 
-if ( isset( $_POST[ 'contribute' ] ) ) {
+if ( isset($_POST['contribute']) ) {
 
-    if ($_POST['csrf'] === $_SESSION['csrfToken']) {
-
-        $title = $_POST[ 'title' ];
-        $content = $_POST[ 'content' ];
-        $message = $article->contribute ( $title, $content );
-    }
-
-} else {
-
-    $_SESSION['csrfToken'] = "";
-
-    $TOKEN_LENGTH = 16;
-    $tokenByte = openssl_random_pseudo_bytes($TOKEN_LENGTH);
-    $csrfToken = bin2hex($tokenByte);
-
-    //セッションに設定
-    $_SESSION['csrfToken'] = $csrfToken;
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $message = $article->contribute($title, $content);
 
 }
-
-
 
 ?>
 
@@ -41,7 +25,7 @@ if ( isset( $_POST[ 'contribute' ] ) ) {
     <meta charset="UTF-8">
     <title>ブログタイトル</title>
 
-    <!-- CSS Bootstrap　-->
+    <!-- CSS Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!-- JS Bootstrap -->
@@ -84,7 +68,6 @@ if ( isset( $_POST[ 'contribute' ] ) ) {
 
         <div>
             <form action="" method ="post">
-                <input type="hidden" name="csrf" value='{$csrfToken}' >
                 <p>タイトル</p>
                     <input type="text" value="" name="title">
                     <br>

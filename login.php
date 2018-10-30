@@ -1,15 +1,19 @@
 <?PHP
 
-session_start ();
+session_start();
 
-if ( isset( $_SESSION[ 'mail' ] ) ) {
+if ( isset( $_SESSION['mail'] ) ) {
 
-    header ( "Location:/manage.php" );
+    header("Location:/manage.php");
     exit();
 
 }
 
-$errorMessage = $_SESSION[ 'error' ];
+if ( isset( $_SESSION['error']) ) {
+
+$errorMessage = $_SESSION['error'];
+
+}
 
 ?>
 
@@ -20,7 +24,7 @@ $errorMessage = $_SESSION[ 'error' ];
 <meta charset="UTF-8">
 <title> ログイン </title>
     
-<!-- CSS Bootstrap　-->
+<!-- CSS Bootstrap -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 <!-- JS Bootstrap -->
@@ -33,11 +37,19 @@ $errorMessage = $_SESSION[ 'error' ];
 <body>
 
 <header>
-
+<div class="container"> 
+    <div class="text-right mb-2">
+        <a class="btn btn-info" href="/index.php">TOP</a>
+    </div>
+</div>
 </header>
 
 <main>
     <div class="container">
+
+        <div>
+            <p><?PHP echo $errorMessage?> </p>
+        </div>
         <div class="mt-5">
             <form class="form-horizontal" action="/manage.php" method="post">
                 <fieldset>
@@ -61,7 +73,7 @@ $errorMessage = $_SESSION[ 'error' ];
             </form>
         </div>
 
-    <!--
+    <!-
     <div>
         <form action="/signup.php" method="post">
             <fieldset>

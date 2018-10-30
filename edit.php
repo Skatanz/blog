@@ -1,12 +1,13 @@
 <?PHP
-require 'function.php';
+
+require 'Class/DB_CONNECT.php';
 require 'Class/Article.php';
 
 session_start ();
 
 $_SESSION[ 'id' ] = "";
 
-$db = set_dbData ();
+$db = new DB_CONNECT();
 
 /** @var TYPE_NAME $article */
 $article = new Article( $db );

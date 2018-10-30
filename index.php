@@ -1,23 +1,22 @@
 <?PHP
 
-require 'function.php';
+require 'Class/DB_CONNECT.php';
 require 'Class/Auth.php';
 require 'Class/Article.php';
 
-session_start ();
+session_start();
 
-$db = set_dbData ();
-
-$auth = new Auth( $db );
-$article = new Article( $db );
+$db = new DB_CONNECT();
+$auth = new Auth($db);
+$article = new Article($db);
 
 $auth->logout();
 
 $getPage = isset( $_GET[ "page" ] ) ? $_GET[ "page" ] : 1;
 
-$contents = $article->get_contents ( $getPage );
-$newContents = $article->get_contents ( 1 );
-$pages = $article->get_total_page ( );
+$contents = $article->get_contents($getPage);
+$newContents = $article->get_contents(1);
+$pages = $article->get_total_page( );
 
 ?>
 
@@ -61,8 +60,8 @@ $pages = $article->get_total_page ( );
                     <div class="row border border-dark shadow mx-3 mb-5 p-3">
                         <div class="col-8">
                             <h3 class="border-bottom mb-4"> <?PHP echo $row['title']; ?> </h3>
-                            <p> <?PHP echo strip_tags( mb_strimwidth ( $row['content'], 0 , 70 , "...") ); ?> </p>
-                            <a href="/kiji.php?id=<?PHP echo $row['id']; ?>">続きを読む</a>
+                            <p> <?PHP echo strip_tags( mb_strimwidth($row['content'], 0 , 70 , "...") ); ?> </p>
+                            <a href="/kiji.php?id=<?PHP echo $row['id']; ?>"> 続きを読む </a>
                         </div>
                         <div class="col-4">
                             <p class=""> <?PHP echo date( "Y 年 m月 d日" , strtotime($row['created_at']) ) ?> </p>

@@ -1,6 +1,6 @@
 <?PHP
 
-require 'function.php';
+require 'Class/DB_CONNECT.php';
 require 'Class/Auth.php';
 require 'Class/Article.php';
 
@@ -8,7 +8,7 @@ session_start ();
 
 $_SESSION[ 'error' ] = "";
 
-$db = set_dbData ();
+$db = new DB_CONNECT();
 
 $auth = new Auth( $db);
 $article = new Article($db);

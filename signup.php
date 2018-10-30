@@ -1,11 +1,11 @@
 <?PHP
 
 require 'Class/DB_CONNECT.php';
-require 'Class/Article.php';
+require 'Class/Auth.php';
 
 //データベースの情報入手
 $db = new DB_CONNECT();
-$article = new Article( $db );
+$auth = new Auth( $db );
 
 
 if ( isset( $_POST['signUp'] ) ) {
@@ -13,7 +13,7 @@ if ( isset( $_POST['signUp'] ) ) {
     $mail = $_POST['mail'];
     $password = $_POST['password'];
 
-    $signUpMessage = $article->signUp($mail, $password);
+    $signUpMessage = $auth->signUp($mail, $password);
 }
 
 

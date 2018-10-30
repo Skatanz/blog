@@ -73,7 +73,7 @@ $errorMessage = $_SESSION['error'];
             </form>
         </div>
 
-    <!-
+    <!--
     <div>
         <form action="/signup.php" method="post">
             <fieldset>

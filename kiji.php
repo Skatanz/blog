@@ -3,17 +3,17 @@
 require 'Class/DB_CONNECT.php';
 require 'Class/Article.php';
 
-session_start ();
+session_start();
 
 $db = new DB_CONNECT();
 $article = new Article( $db );
 
 $_get_id = $_GET[ 'id' ];
 
-$content = $article->get_content ( $_get_id );
-$newContents = $article->get_contents ( 1 );
+$content = $article->getContent($_get_id);
+$newContents = $article->getContents(1);
 
-if ( isset( $_SESSION[ 'mail' ] ) ) {
+if (isset($_SESSION[ 'mail' ])) {
     $edit = "編集する";
 }
 

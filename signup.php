@@ -5,10 +5,10 @@ require 'Class/Auth.php';
 
 //データベースの情報入手
 $db = new DB_CONNECT();
-$auth = new Auth( $db );
+$auth = new Auth($db);
 
 
-if ( isset( $_POST['signUp'] ) ) {
+if (isset($_POST['signUp'])) {
 
     $mail = $_POST['mail'];
     $password = $_POST['password'];

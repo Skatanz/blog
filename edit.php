@@ -3,19 +3,17 @@
 require 'Class/DB_CONNECT.php';
 require 'Class/Article.php';
 
-session_start ();
+session_start();
 
 $_SESSION[ 'id' ] = "";
 
 $db = new DB_CONNECT();
 
-/** @var TYPE_NAME $article */
-$article = new Article( $db );
+$article = new Article($db);
 
 $_get_id = $_GET[ 'id' ];
 
-/** @var TYPE_NAME $content */
-$content = $article->get_content ( $_get_id );
+$content = $article->getContent($_get_id);
 
 $_SESSION[ 'id' ] = $_get_id;
 ?>

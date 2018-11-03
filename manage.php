@@ -4,63 +4,63 @@ require 'Class/DB_CONNECT.php';
 require 'Class/Auth.php';
 require 'Class/Article.php';
 
-session_start ();
+session_start();
 
 $_SESSION[ 'error' ] = "";
 
 $db = new DB_CONNECT();
 
-$auth = new Auth( $db);
+$auth = new Auth($db);
 $article = new Article($db);
 
 //更新処理
-if ( isset( $_POST[ 'update' ] ) ) {
+if (isset($_POST[ 'update' ])) {
 
     $idUpdate = $_SESSION[ 'id' ];
     $titleUpdate = $_POST[ 'titleUpdate' ];
     $contentUpdate = $_POST[ 'contentUpdate' ];
 
-    $updateMessage = $article->update ( $idUpdate, $titleUpdate, $contentUpdate );
+    $updateMessage = $article->update($idUpdate, $titleUpdate, $contentUpdate);
 
 }
 //削除処理
-if ( isset( $_POST[ 'delete' ] ) ) {
+if (isset($_POST[ 'delete' ])) {
 
     $idDelete = $_SESSION[ 'id' ];
-    $deleteMessage = $article->delete ( $idDelete );
+    $deleteMessage = $article->delete($idDelete);
 
 }
 //メールアドレス認証
-if ( empty( $_SESSION[ 'mail' ] ) ) {
+if (empty($_SESSION[ 'mail' ])) {
 
-    if ( isset( $_POST[ 'login' ] ) ) {
+    if (isset($_POST[ 'login' ])) {
 
-        if ( empty( $_POST[ 'mail' ] ) ) {
+        if (empty($_POST[ 'mail' ])) {
 
             $_SESSION[ 'error' ] = "メールアドレスが入力されていません";
-            header ( "Location:/login.php" );
+            header("Location:/login.php");
             exit();
 
-        } elseif ( empty( $_POST[ 'password' ] ) ) {
+        } elseif (empty($_POST[ 'password' ])) {
 
             $_SESSION[ 'error' ] = "パスワードが入力されていません";
-            header ( "Location:/login.php" );
+            header("Location:/login.php");
             exit();
         }
 
         $mail = $_POST[ 'mail' ];
         $password = $_POST[ 'password' ];
 
-        $errorMessage = $auth->login ( $mail, $password );
+        $errorMessage = $auth->login($mail, $password);
 
     } else {
-        header ( "Location: /login.php" );
+        header("Location: /login.php");
         exit();
     }
 }
 
 //
-if ( isset( $_GET[ "page" ] ) ) {
+if (isset($_GET[ "page" ])) {
 
     $getPage = $_GET[ "page" ];
 
@@ -71,9 +71,9 @@ if ( isset( $_GET[ "page" ] ) ) {
 }
 
 //記事の取得
-$contents = $article->get_contents ( $getPage );
+$contents = $article->getContents($getPage);
 //トータルページ数の取得
-$pages = $article->get_total_page ( );
+$pages = $article->getTotalPage();
 
 ?>
 
@@ -130,11 +130,11 @@ $pages = $article->get_total_page ( );
                     <div class="row border border-dark shadow mx-3 mb-5 p-3">
                         <div class="col-8">
                             <h3 class="border-bottom mb-4"> <?PHP echo $row['title']; ?> </h3>
-                            <p> <?PHP echo strip_tags( mb_strimwidth ( $row['content'], 0 , 70 , "...") ); ?> </p>
+                            <p> <?PHP echo strip_tags(mb_strimwidth($row['content'], 0, 70, "...")); ?> </p>
                             <a href="/kiji.php?id=<?PHP echo $row['id']; ?>">続きを読む</a>
                         </div>
                         <div class="col-4">
-                            <p class=""> <?PHP echo date( "Y 年 m月 d日" , strtotime($row['created_at']) ) ?> </p>
+                            <p class=""> <?PHP echo date("Y 年 m月 d日", strtotime($row['created_at'])) ?> </p>
                         </div>
                     </div>
                 <?PHP endforeach; ?>

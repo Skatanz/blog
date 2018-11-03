@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>SIB</title>
+<link href="https://deblogs.herokuapp.com/"></link>
+<updated>2018-11-03T14:49:42+09:00</updated>
+<id>urn:uuid:877e8162-01c8-5648-e498-13a681c103ea</id>
+<entry>
+<title>test</title>
+<updated>2018-10-29T22:22:00+09:00</updated>
+<link href="https://deblogs.herokuapp.com/kiji.php?id=1"></link>
+<id>urn:uuid:450452bb-f130-ce51-49cd-40049ce78c5a</id>
+<author><name>Yamada</name>
+</author>
+</entry>
+</feed>

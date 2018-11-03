@@ -3,12 +3,12 @@
 require 'Class/DB_CONNECT.php';
 require 'Class/Article.php';
 
-session_start ();
+session_start();
 
 $db = new DB_CONNECT();
 $article = new Article($db);
 
-if ( isset($_POST['contribute']) ) {
+if (isset($_POST['contribute'])) {
 
     $title = $_POST['title'];
     $content = $_POST['content'];

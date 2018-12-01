@@ -7,6 +7,7 @@ session_start();
 
 $db = new DB_CONNECT();
 $article = new Article($db);
+$message = "";
 
 if (isset($_POST['contribute'])) {
 
@@ -32,6 +33,11 @@ if (isset($_POST['contribute'])) {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <style>
+        body {
+                background-color:#E7E9DE;
+        }
+    </style>
 
     <!-- JS tinymce -->
     <script src="js/tinymce/tinymce.min.js"></script>
@@ -40,6 +46,7 @@ if (isset($_POST['contribute'])) {
             selector: "#editor", // id="editor"の場所にTinyMCEを適用
             language: "ja",   // 言語 = 日本語
             height: 300,      // 高さ = 300px
+            width: 1000,
             menubar: false,   // メニューバーを隠す
             plugins: "textcolor image link", // 文字色、画像ボタン、リンク用のプラグインを適用
             toolbar: [ // ツールバー(2段)

@@ -45,7 +45,7 @@ Class Auth
 
         } catch ( PDOException $e ) {
             $message = 'データベースエラー';
-            //$errorMessage = $e->getMessage(); // でエラー内容を参照可能（デバッグ時のみ表示）
+            //$message = $e->getMessage(); // でエラー内容を参照可能（デバッグ時のみ表示）
 
             return $message;
         }
@@ -59,7 +59,6 @@ Class Auth
      */
     function login($mail, $password)
     {
-
         $sql = "SELECT * FROM user_table WHERE mail =:mail ";
 
         try {
@@ -93,7 +92,7 @@ Class Auth
     function logout()
     {
         $_SESSION = array();
-        // 最終的に、セッションを破壊する
+        // セッションを破壊する
         session_destroy();
     }
 }

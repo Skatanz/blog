@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>SIB</title>
+<link href="https://deblogs.herokuapp.com/"></link>
+<updated>2018-11-07T21:52:03+09:00</updated>
+<id>urn:uuid:877e8162-01c8-5648-e498-13a681c103ea</id>
+<entry>
+<title>ブログtips(ログイン機能)</title>
+<updated>2018-11-06T22:52:03+09:00</updated>
+<link href="https://deblogs.herokuapp.com/kiji.php?id=2"></link>
+<id>urn:uuid:1892fe64-3a9b-9726-1c31-81171043e860</id>
+<author><name>Yamada</name>
+</author>
+</entry>
+<entry>
+<title>ブログtips(環境構築)</title>
+<updated>2018-10-29T22:22:00+09:00</updated>
+<link href="https://deblogs.herokuapp.com/kiji.php?id=1"></link>
+<id>urn:uuid:450452bb-f130-ce51-49cd-40049ce78c5a</id>
+<author><name>Yamada</name>
+</author>
+</entry>
+</feed>

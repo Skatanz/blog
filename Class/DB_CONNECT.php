@@ -1,16 +1,27 @@
 <?PHP
 
+/**
+ * DBへの接続処理
+ * 
+ */
+
 Class DB_CONNECT
 {
-    public $host;
-    public $dbname;
+    const HOST = "127.0.0.1";
+    const DBNAME = "blog";
+    const USER = "root";
+    const PASSWORD = "<fVYVyo+E4do";
+    
     public $pdo;
-
-        public function __construct()
-        {
-            $this->host = 'host='.getenv('DB_HOST');
-            $this->dbname = 'dbname='.getenv('DB_DATABASE');
-            $this->pdo = new PDO ("mysql:{$this->host};$this->dbname", getenv('DB_USERNAME'), getenv('DB_PASSWORD'), [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);        
-        }
+    
+    /**
+     * PDO接続文の用意
+     */
+    public function __construct()
+    {
+        $host = 'host='.self::HOST;
+        $dbname = 'dbname='.self::DBNAME;
+        $this->pdo = new PDO("mysql:{$host};$dbname", self::USER, self::PASSWORD);
+    }
 }
 ?>
